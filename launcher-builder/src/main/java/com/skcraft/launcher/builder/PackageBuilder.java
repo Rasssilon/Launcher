@@ -164,7 +164,7 @@ public class PackageBuilder {
 
                 if (basicProfile.isLegacy()) {
                     processor = new OldForgeLoaderProcessor();
-                } else if (basicProfile.getProfile().equalsIgnoreCase("forge")) {
+                } else {
                     processor = new ModernForgeLoaderProcessor();
                 }
             } else if (BuilderUtils.getZipEntry(jarFile, "fabric-installer.json") != null) {
@@ -265,7 +265,7 @@ public class PackageBuilder {
         try {
             log.info("Downloading library " + library.getName() + " from " + url + "...");
             HttpRequest.get(url).execute().expectResponseCode(200)
-                    .expectContentType("application/java-archive", "application/octet-stream")
+                    .expectContentType("application/java-archive", "application/octet-stream", "application/zip")
                     .saveContent(tempFile);
         } catch (IOException e) {
             log.info("Could not get file from " + url + ": " + e.getMessage());
